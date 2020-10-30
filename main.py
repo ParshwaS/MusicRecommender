@@ -1,1 +1,1 @@
-print("Hello World!!")
+print("Kaisa laga mera Mazak !!")
