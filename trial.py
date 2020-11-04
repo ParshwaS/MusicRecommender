@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 def checkDiagonal(arr):
     for i in range(len(arr)):
@@ -6,13 +7,21 @@ def checkDiagonal(arr):
             if i == j:
                 continue
             else:
-                if abs(arr[i][j]) > 0.001:
+                if abs(arr[i][j]) > 0.619:
                     return False
     return True
 
+def normalize(u):
+    a = 0
+    for x in u:
+        a += x*x
+    return math.sqrt(a)
+
 def gram_schmidt_process(A):
-    """Perform QR decomposition of matrix A using Gram-Schmidt process."""
-    (num_rows, num_cols) = np.shape(A)
+    """
+    Perform QR decomposition of matrix A using Gram-Schmidt process.
+    """
+    num_rows = np.shape(A)[0]
 
     # Initialize empty orthogonal matrix Q.
     Q = np.empty([num_rows, num_rows])
@@ -25,7 +34,7 @@ def gram_schmidt_process(A):
             proj = np.dot(np.dot(Q[:, i].T, a), Q[:, i])
             u -= proj
 
-        e = u / np.linalg.norm(u)
+        e = u / normalize(u)
         Q[:, cnt] = e
 
         cnt += 1  # Increase columns counter.
@@ -38,7 +47,7 @@ def gram_schmidt_process(A):
 def qrFactorization(arr):
     temp = arr
     i = 0
-    while(i<1000):
+    while(True):
         Q,R = gram_schmidt_process(temp)
         temp = np.dot(R, Q)
         if(checkDiagonal(temp)):
@@ -51,13 +60,11 @@ def qrFactorization(arr):
 def printLambda(arr):
     count = 1
     for i in range(len(arr)):
-        for j in range(len(arr[i])):
-            if(i == j):
-                temp = arr[i][j]
-                if(abs(temp) < 0.000000000001):
-                    temp = 0
-                print("Lamda"+str(count) +": " + str(temp))
-                count += 1
+        temp = arr[i][i]
+        if(abs(temp) < 0.000000000001):
+            temp = 0
+        print("Lamda"+str(count) +": " + str(temp))
+        count += 1
     
 def read():
     f = open('matrix.txt', 'r')
@@ -78,5 +85,4 @@ def main():
     print(matrix)
     printLambda(qrFactorization(arr))
 
-if __name__ == '__main__':
-    main()
+main()
