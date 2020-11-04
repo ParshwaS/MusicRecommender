@@ -1,0 +1,30 @@
+
+
+R = U x M
+
+m*n = (m*k) * (k*n)
+
+U(i) = [ x 0 0 4.15 ]
+
+M(j) = [    y
+            0
+            0
+            4.15   ]
+
+= 25
+
+R[i][j] = 10
+
+
+
+error = 10 - 25 = -15
+
+error = (R - (x*y + C))^2
+
+d/dx(error) = 2*(R - (x*y + C))*(-y) = -2*(R - (x*y + C))*y
+
+U(i)[x] = U(i)[x] + 2*(R - (x*y + C))*y*0.001
+        = U(i)[x] + 2*(-15)*(5)*0.001
+        = U(i)[x] - 0.15
+
+k = features = {sad, rock, party, love}
